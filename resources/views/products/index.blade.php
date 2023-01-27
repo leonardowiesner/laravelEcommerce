@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>List of products</h1>
+@extends('layouts.master')
+{{-- la herenia de layouts master nos permite tener una estructura head y body unica para todas las blades
+mejorando la modularidad del proyecto --}}
 
-    @if (empty($products))
+@section('content')
+<h1>List of products</h1>
+    {{-- verificar si la lista de productos esta vacia --}}
+    @empty ($products)
         <div class="alert alert-warning">
             The list of products is empty
         </div>
@@ -37,18 +33,9 @@
                     <td>{{$product->stock}}</td>
                     <td>{{$product->status}}</td>
                 </tr>
-
                 @endforeach
-                <tr>
-                    <td>1</td>
-                    <td>Shampoo</td>
-                    <td>Best shampoo ever</td>
-
-                </tr>
             </tbody>
         </table>
     </div>
-    @endif
-
-</body>
-</html>
+    @endempty
+@endsection
