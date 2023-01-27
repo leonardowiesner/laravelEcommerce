@@ -16,11 +16,11 @@ class ProductController extends Controller
     }
 
     public function create(){
-        return 'This is the form of products';
+        return view('products.create');
     }
 
     public function store(){ 
-        //
+        dd('Estamos en store');
     }
 
     public function show($product){
