@@ -20,18 +20,30 @@ class ProductController extends Controller
     }
 
     public function store(){ 
-        // $product = Product::create([
-        //     'title' => request()->title,
-        //     'description' => request()->description,
-        //     'price' => request()->price,
-        //     'stock' => request()->stock,
-        //     'status' => request()-> status,
 
-        // ]);
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:1000'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:1'],
+            'status' => ['required', 'in:available,unavailable'],
+        ];
+
+        request()->validate($rules);  //verifica las condiciones del array 
+
+        if (request()->status == 'available' && request()->stock ==0){
+            // PARA VERIFICAR SI EL STOCK ES MAYOR A 0 
+            return redirect()
+                ->back()
+                ->withInput(request()->all())
+                ->withErrors('If available must have stock');
+        }
         
         $product = Product::create(request()->all());
-
-        return $product;
+        // El redirect para hacer que el usuario vuelva a la ruta especificada 
+        return redirect()
+            ->route('products.index')
+            ->withSuccess("'The new product with id {$product->id} was created'");
     }
 
     public function show($product){
@@ -50,16 +62,33 @@ class ProductController extends Controller
     }
 
     public function update($product){
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:1000'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:1'],
+            'status' => ['required', 'in:available,unavailable'],
+        ];
+
+        request()->validate($rules);  //verifica las condiciones del array 
         $product = Product::findOrFail($product);
 
         $product->update(request()->all());
 
-        return $product;
+        return redirect()
+            ->route('products.index')
+            ->withSuccess("The product with id {$product->id} was edited");
     }
-
+    // eliminar un producto
     public function destroy($product){
+        $product = Product::findOrFail($product);
+
+        $product->delete();
+
+        return redirect()
+        ->route('products.index')
+        ->withSuccess("The product with id {$product->id} was removed");
+
     }
-
-
 
 }

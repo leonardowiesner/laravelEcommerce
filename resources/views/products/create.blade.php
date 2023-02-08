@@ -1,5 +1,5 @@
 @extends('layouts.master')
-{{-- la herenia de layouts master nos permite tener una estructura head y body unica para todas las blades
+{{-- la herencia de layouts master nos permite tener una estructura head y body unica para todas las blades
 mejorando la modularidad del proyecto --}}
 
 @section('content')
@@ -9,27 +9,27 @@ mejorando la modularidad del proyecto --}}
         @csrf
         <div class="form-row">
             <label>Title</label>
-            <input class="form-control" type="text" name="title" required>
+            <input class="form-control" type="text" name="title" required value="{{ old('title') }}">
         </div>
         <div class="form-row">
             <label>Description</label>
-            <input class="form-control" type="text" name="description" required>
+            <input class="form-control" type="text" name="description" required value="{{ old('description') }}">
         </div>
         <div class="form-row">
             <label>Price</label>
-            <input class="form-control" type="number" min="1.00" step="0.01" name="price" required>
+            <input class="form-control" type="number" min="1.00" step="0.01" name="price" required value="{{ old('price') }}">
         </div>
         <div class="form-row">
             <label>Stock</label>
-            <input class="form-control" type="number" min="0" name="stock" required>
+            <input class="form-control" type="number" min="0" name="stock" required value="{{ old('stock') }}">
         </div>
 
         <div class="form-row">
             <label>Status</label>
-            <select class="custom-select" name="status" required>
+            <select class="custom-select" name="status" required ">
                 <option value=""selected>Select...</option>
-                <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
+                <option {{ old('status') == 'available' ? 'selected' : '' }}value="available">Available</option>
+                <option {{ old('status') == 'unavailable' ? 'selected' : '' }}value="unavailable">Unavailable</option>
             </select>
         </div>
         <div class="form-row">
