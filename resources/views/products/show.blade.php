@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 {{-- la herenia de layouts master nos permite tener una estructura head y body unica para todas las blades
 mejorando la modularidad del proyecto --}}
 
